@@ -1,36 +1,96 @@
 import './css/styles.css';
 
 import { fetchCountries } from './fetchCountries';
+import debounce from 'lodash.debounce';
+import Notiflix from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
-// function fetchCountries(name) {
-//   // const a = fetch('https://restcountries.com/v3.1/name/{name}');
+const refs = {
+  searchBox: document.querySelector('#search-box'),
+  countryList: document.querySelector('.country-list'),
+  countryInfo: document.querySelector('.country-info'),
+};
 
-//   fetch('https://restcountries.com/v2/name/peru')
-//     .then(response => {
-//       return response.json();
+refs.searchBox.addEventListener('input', debounce(onInputSeach, DEBOUNCE_DELAY));
+
+function clearInput() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
+}
+
+function onInputSeach(e) {
+  const inputValue = e.target.value.trim();
+  console.log(inputValue);
+  if (inputValue === '') {
+    clearInput();
+    return;
+  }
+  fetchCountries(inputValue);
+}
+
+// ===============================================================
+
+// import './css/styles.css';
+// import debounce from 'lodash.debounce';
+// import Notiflix from 'notiflix';
+// import { fetchCountries } from './fetchCountries';
+// const DEBOUNCE_DELAY = 300;
+
+// const refs = {
+//   searchBox: document.querySelector('#search-box'),
+//   countriesList: document.querySelector('.country-list'),
+//   countryInfo: document.querySelector('.country-info'),
+// };
+
+// refs.searchBox.addEventListener('input', debounce(handleSearch, DEBOUNCE_DELAY));
+
+// function clearData() {
+//   refs.countriesList.innerHTML = '';
+//   refs.countryInfo.innerHTML = '';
+// }
+
+// function handleSearch(event) {
+//   const inputValue = event.target.value.trim();
+//   if (inputValue === '') {
+//     clearData();
+//     return;
+//   }
+//   fetchCountries(inputValue)
+//     .then(countries => {
+//       if (countries.length > 10) {
+//         clearData();
+//         Notiflix.Notify.info('Too many matches found. Please enter a more specific query!');
+//         return;
+//       } else if (countries.length === 1) {
+//         clearData();
+//         renderCountry(countries[0]);
+//         return;
+//       }
+//       renderCountries(countries);
 //     })
-//     .then(country => console.log(country))
-//     .catch(error => console.log(error));
+//     .catch(error => {
+//       Notiflix.Notify.failure('Oops, there is no country with that name');
+//     });
 // }
+// let country = null;
 
-fetchCountries('ukraine');
-
-// https://restcountries.com/v2/name/united
-// https://restcountries.com/v2/{service}?fields={field},{field},{field}
-// https://restcountries.com/v2/all?fields=name,capital,currencies
-
-// function createPromise(position, delay) {
-//   return new Promise((resolve, reject) => {
-//     const shouldResolve = Math.random() > 0.3;
-//     if (shouldResolve) {
-//       resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//     } else {
-//       reject(`❌ Rejected promise ${position} in ${delay}ms`);
-//     }
-//   });
+// function renderCountry(country) {
+//   refs.countryInfo.innerHTML = `
+//         <div class="info-title">
+//         <img src = "${country.flag.svg}" alt = Flag of"${country.name.official} class = "flag"">
+//         <h1>${country.name.official}</h1>
+//         <p><span>Capital:</span> ${country.capital}</p>
+//         <p><span>Population:</span> ${country.population}</p>
+//         <p><span>Languages:</span> ${Object.values(country.languages).join(', ')}</p>
+//         </div>
+//         `;
 // }
-//  createPromise(i, delaySet - step)
-//         .then(resalt => console.log(resalt))
-//         .catch(error => console.log(error));
+// function renderCountries(countries) {
+//   clearData();
+//   countries
+//     .map(country => {
+//       refs.countriesList.innerHTML = `<li><img src = "${country.flags.svg}" alt = Flag of"${country.name.official}"><span>${country.name.official}</span></li>`;
+//     })
+//     .join('');
+// }
