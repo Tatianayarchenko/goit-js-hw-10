@@ -1,29 +1,16 @@
-{{!-- {{#each country}} --}}
-<li style='list-style: none; font-size: 24px; font-weight: 700;'>
-  <div style='display: flex;'>
-    <img
-      src='{{flags.svg}}'
-      alt='{{name.official}}'
-      width='50px'
-      height='40px'
-      style='margin-right: 20px;'
-    />
-    <h2>{{name.official}}</h2>
-  </div>
-
-  <p>{{capital}}</p>
-  <p>{{population}}</p>
-  <p>{{languages}}</p>
-</li>
-{{!-- {{/each}} --}}
-
-{{!-- <li style='list-style: none; font-size: 10px; font-weight: 500; display: flex'>
+<div style='display: flex;'>
   <img
     src='{{flags.svg}}'
     alt='{{name.official}}'
-    width='30px'
-    height='20px'
-    style='margin-right: 10px;'
+    width='60px'
+    height='40px'
+    style='margin-right: 20px;'
   />
-  <h2>{{name.official}}</h2>
-</li> --}}
+  <h1>{{name.official}}</h1>
+</div>
+
+<p><span style='font-weight: 700;'>Capital: </span>{{capital}}</p>
+<p><span style='font-weight: 700;'>Population: </span>{{population}}</p>
+{{#each languages}}
+  <p><span style='font-weight: 700;'>Languages: </span>{{this}}</p>
+{{/each}}
