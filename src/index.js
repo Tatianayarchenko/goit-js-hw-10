@@ -36,7 +36,7 @@ function onInputSeach(e) {
       } else if (country.length === 1) {
         clearInput();
         renderCountry(country);
-      } else if (country.length >= 2 || country.length <= 10) {
+      } else if (country.length >= 2 && country.length <= 10) {
         clearInput();
         renderCountries(country);
       }
